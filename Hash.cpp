@@ -10,6 +10,7 @@
 
 using namespace std;
 
+void Hash();
 string GetFile();
 bool Pirminis(int x);
 void Failo_Skaitymas(string FileName, string& Eilute);
@@ -20,16 +21,21 @@ string  gen_random(int len);
 int main()
 { 
     int random;
-    cout << "Ar norite tikrinti faila po eilute? (1/0) "; cin >> random;
+    cout << "Ar norite tikrinti faila po eilute? (1) " << endl; 
+    cout << "Ar norite sukurti 100 000 eiluciu faila? (2) " << endl;
+    cout << "Ar visa faila pakeisti i hash? (3)" << endl;
+    cin >> random;
     if(random == 1)
         Failo_Skaitymas_Eilutem();
-
-    int random1;
-    cout << "Ar norite sukurti 100 000 eiluciu faila? (1/0) "; cin >> random1;
-    if(random1== 1)
+    if(random == 2)
         Failo_Generaviams();
-    
-    
+    if(random == 3)
+        Hash();
+    return 0;
+}
+
+void Hash()
+{
     string FileName = GetFile();
     string inp;
 
@@ -123,7 +129,6 @@ int main()
         }
         cout << out;
     }
-    return 0;
 }
 
 string GetFile() 
@@ -238,7 +243,7 @@ void Failo_Skaitymas_Eilutem()
     string FileName = GetFile();
     ifstream D (FileName);
     ofstream R ("rez.txt");
-    string Tekstas, starter = "asgiuhbgsiuhaiushfijgb9iugaf";
+    string Tekstas, starter = "asgiuhbgsiuhaiushfijgb9iugaf", Laikinas;
     string Eilute = starter;
     bitset<256> out = 0;
     char a;
@@ -248,53 +253,54 @@ void Failo_Skaitymas_Eilutem()
         {
             a = Tekstas[i];
             if(a == 'e')
-                Eilute += starter; 
+                Laikinas += starter; 
             if(a == 'r')
-                Eilute += starter + starter; 
+                Laikinas += starter + starter; 
             if(a == 't')
-                Eilute += "ashijiuhg"; 
+                Laikinas += "ashijiuhg"; 
             if(a == 'y')
-                Eilute += "asjhnkfuijdgniua";
+                Laikinas += "asjhnkfuijdgniua";
             if(a == 'u')
-                Eilute += "iudehfasinbuihjbn";
+                Laikinas += "iudehfasinbuihjbn";
             if(a == 'i')
-                Eilute += "3wuiahijngijnaijsib5";
+                Laikinas += "3wuiahijngijnaijsib5";
             if(a == 'o')
-                Eilute += "asmlksdjnfgijas";
+                Laikinas += "asmlksdjnfgijas";
             if(a == 'p')
-                Eilute += "asoidfhaiujgbaijshokhbv";
+                Laikinas += "asoidfhaiujgbaijshokhbv";
             if(a == 'a')
-                Eilute += "asjoidjgibasf"; 
+                Laikinas += "asjoidjgibasf"; 
             if(a == 's')
-                Eilute += "asdfoibhvniouashs9"; 
+                Laikinas += "asdfoibhvniouashs9"; 
             if(a == 'd')
-                Eilute += "asfnoknbiuabs"; 
+                Laikinas += "asfnoknbiuabs"; 
             if(a == 'f')
-                Eilute += "bolkasndovindibj"; 
+                Laikinas += "bolkasndovindibj"; 
             if(a == 'g')
-                Eilute += "asfoijbv09iasjoi"; 
+                Laikinas += "asfoijbv09iasjoi"; 
             if(a == 'h')
-                Eilute += "asfouiuhbiojasoipf"; 
+                Laikinas += "asfouiuhbiojasoipf"; 
             if(a == 'j')
-                Eilute += "basoidhgoiasjgsa"; 
+                Laikinas += "basoidhgoiasjgsa"; 
             if(a == 'k')
-                Eilute += "boijuhansijbn"; 
+                Laikinas += "boijuhansijbn"; 
             if(a == 'l')
-                Eilute += "asgnoibhiuhiu vasd"; 
+                Laikinas += "asgnoibhiuhiu vasd"; 
             if(a == 'z')
-                Eilute += "asgvoi h9ifja0jf";
+                Laikinas += "asgvoi h9ifja0jf";
             if(a == 'c')
-                Eilute += "gnviajbihasbfij"; 
+                Laikinas += "gnviajbihasbfij"; 
             if(a == 'v')
-                Eilute += "asvoijhgv98ahs"; 
+                Laikinas += "asvoijhgv98ahs"; 
             if(a == 'b')
-                Eilute += "amsofjkbnjhbasokas"; 
+                Laikinas += "amsofjkbnjhbasokas"; 
             if(a == 'n')
-                Eilute += "asvboijbg9iuahso"; 
+                Laikinas += "asvboijbg9iuahso"; 
             if(a == 'm')
-                Eilute += "asgoihbijnkplkoihbajioy8u";              
+                Laikinas += "asgoihbijnkplkoihbajioy8u";              
         }
         Eilute += Tekstas;
+        Eilute += Laikinas;
         int kiek = 0;
         int pirm[10000];    
         for (int i = 0; i <= 100000; i++)
@@ -306,7 +312,8 @@ void Failo_Skaitymas_Eilutem()
             }
         }
         string inp = Eilute;
-        for(int in = 0; in < inp.length(); in++)
+        auto Start = std::chrono::high_resolution_clock::now();
+        for(int in = 0; in < inp.length() % 100000; in++)
         {
             for(int i = 0; i < 256; i++)
             {
@@ -370,7 +377,6 @@ void Failo_Skaitymas_Eilutem()
             }                  
         }
         string temp = out.to_string();
-        auto Start = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < 64; i++)
         {
             bitset <4> bss1( temp.substr (i * 4, (i + 1) * 4) );
@@ -383,11 +389,14 @@ void Failo_Skaitymas_Eilutem()
             {
                 out += bss1.to_ulong() + 'a' - 10;
             }
-            // R << out;
+            R << out;
         }
         auto End = std::chrono::high_resolution_clock::now();
         laikas += std::chrono::duration_cast<std::chrono::milliseconds>(End - Start).count() / 1000.;
-        // R << endl;
+        R << endl;
+        Eilute = " ";
+        Tekstas = " ";
+        Laikinas = " ";
         inp = " ";
         temp = " ";
         out = 0;
@@ -434,51 +443,3 @@ string  gen_random(int len)
 
     return s;
 }
-
-
-        // if(Tekstas == "e")
-        //     Eilute += starter; 
-        // if(Tekstas == "r")
-        //     Eilute += starter + starter; 
-        // if(Tekstas == "t")
-        //     Eilute += starter + "ashijiuhg"; 
-        // if(Tekstas == "y")
-        //     Eilute += starter + "asjhnkfuijdgniua";
-        // if(Tekstas == "u")
-        //     Eilute += starter + "iudehfasinbuihjbn";
-        // if(Tekstas == "i")
-        //     Eilute += starter + "3wuiahijngijnaijsib5";
-        // if(Tekstas == "o")
-        //     Eilute += starter + "asmlksdjnfgijas";
-        // if(Tekstas == "p")
-        //     Eilute += starter + "asoidfhaiujgbaijshokhbv";
-        // if(Tekstas == "a")
-        //     Eilute += starter + "asjoidjgibasf"; 
-        // if(Tekstas == "s")
-        //     Eilute += starter + "asdfoibhvniouashs9"; 
-        // if(Tekstas == "d")
-        //     Eilute += starter + "asfnoknbiuabs"; 
-        // if(Tekstas == "f")
-        //     Eilute += starter + "bolkasndovindibj"; 
-        // if(Tekstas == "g")
-        //     Eilute += starter + "asfoijbv09iasjoi"; 
-        // if(Tekstas == "h")
-        //     Eilute += starter + "asfouiuhbiojasoipf"; 
-        // if(Tekstas == "j")
-        //     Eilute += starter + "basoidhgoiasjgsa"; 
-        // if(Tekstas == "k")
-        //     Eilute += starter + "boijuhansijbn"; 
-        // if(Tekstas == "l")
-        //     Eilute += starter + "asgnoibhiuhiu vasd"; 
-        // if(Tekstas == "z")
-        //     Eilute += starter + "asgvoi h9ifja0jf";
-        // if(Tekstas == "c")
-        //     Eilute += starter + "gnviajbihasbfij"; 
-        // if(Tekstas == "v")
-        //     Eilute += starter + "asvoijhgv98ahs"; 
-        // if(Tekstas == "b")
-        //     Eilute += starter + "amsofjkbnjhbasokas"; 
-        // if(Tekstas == "n")
-        //     Eilute += starter + "asvboijbg9iuahso"; 
-        // if(Tekstas == "m")
-        //     Eilute += starter + "asgoihbijnkplkoihbajioy8u";  
