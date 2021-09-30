@@ -62,4 +62,3 @@ Taip pat kai jau suhashuojate kokį nors dokumentą po eilutę galite pasitiktin
 1. Programa su failais ir jų pasikeitimu susitvarko tvarkingai jokios koalizijos nėra kol tikrinami pilni failai nors ir jie skirtūsi tik vienu simboliu 
 2. Toks pat dokumentas visada turės tą patį hash.
 3. Nors su failais visaks tvarkoje tačiau skaitant failus po eilutę buvo sulaukta koalizijos. Todėl galima suprasti kad programa neveikia 100Į taip kaip turėtų veikti
-4. 
