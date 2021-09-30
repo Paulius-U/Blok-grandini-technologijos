@@ -12,7 +12,7 @@ Sukurti hash funkcija
 # Programos veikimo principas:
 pasileidus programą iveskite skaiciu nuo 1 iki 5 koki darba norite atlikti
 
-![image](https://user-images.githubusercontent.com/75576100/135520165-cd5c9a52-1cdd-4167-a301-d26aa0f6d192.png)
+![image](https://user-images.githubusercontent.com/75576100/135527123-13e96112-e4a6-49db-8be3-02fa1b4de055.png)
 
 veliau iveskite nuskaityti failo varda
 
