@@ -8,6 +8,7 @@ Sukurti hash funkcija
 2. gaunamas hash turi buti 256 bitu arba 64 simboliu 
 3. naudojant ta pati faila gaunamas visada tas pats hash
 4. taciau jei failo duomenys pasikecia bet vienu simboliu musu hash pasikeicia labai daug
+5. Atsparumas kolizijai.
 
 # Programos veikimo principas:
 pasileidus programą iveskite skaiciu nuo 1 iki 5 koki darba norite atlikti
@@ -55,3 +56,10 @@ Mano kodo dabartinė versija nesugeba padaryti tiek hash kad jie nesikartotų, o
 Taip pat kai jau suhashuojate kokį nors dokumentą po eilutę galite pasitiktinti kiek simbolių atitinka vienas hex kitą. Tarkime pirmas hex simbolis kito hex pirmą simbolį ir tuomet gauname kiek jų buvo daugiausia, mažiausia ir vidutiniškai. Tas pats daroma ir su Bitais.
 
 ![image](https://user-images.githubusercontent.com/75576100/135524342-9375da47-8ba8-4fa9-a48c-bdb86caaa0a1.png)
+
+# išvados 
+
+1. Programa su failais ir jų pasikeitimu susitvarko tvarkingai jokios koalizijos nėra kol tikrinami pilni failai nors ir jie skirtūsi tik vienu simboliu 
+2. Toks pat dokumentas visada turės tą patį hash.
+3. Nors su failais visaks tvarkoje tačiau skaitant failus po eilutę buvo sulaukta koalizijos. Todėl galima suprasti kad programa neveikia 100Į taip kaip turėtų veikti
+4. 
