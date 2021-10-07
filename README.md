@@ -47,6 +47,7 @@ Tarp pasirinkimu taip pat galima susikurti 100 000 eilučiu atsitiktinai sugener
 
 Taip pat tarp pasirinkimų galima ir nusiskaityti failą po eilutę tik žinomas tas užtruks ilgiau, bet jums bus sugeneruota daugiau hash kodų žinoma skaitant po eilutę jums ir apskaičiuos laiką kurį sugaišo programa hashuojant
 
+![image](https://user-images.githubusercontent.com/75576100/136427672-29e92964-63ba-427e-bbb6-5e5ef23f2aca.png)
 
 Jeigu jau nusiskaitėte bent vieną failą po eilute galite tuomet lyginti ar nesusidarė tokie pat hashšai tarp eilučių ir taip įsitikinsite kodo stiprumu 
 Pati skaičiuoklė veikia tokiu principu jog jeigu antroje eilutėje buvo rastas toks pat hash kaip ir ketvirtoje ir devintoje tada skaičiuojant jų kiekį bus 3 kadangi antra eilutė randa ketvirtą ir devintą ir tada ketvirtoji eilutė randa dar devintą.
@@ -55,6 +56,8 @@ Jei viskas gerai ir hash nepasikarotjo gauname:
 ![image](https://user-images.githubusercontent.com/75576100/136422111-63cc9e45-d02f-4333-b0e2-566cfb50fdf6.png)
 
 Jei pasikartojo išvardinama kur pasikartojo ir kiek iš viso tai buvo kartų: 
+
+![image](https://user-images.githubusercontent.com/75576100/136426535-5dce1781-f656-402b-aee4-fbea09985f22.png)
 
 Taip pat kai jau suhashuojate kokį nors dokumentą po eilutę galite pasitiktinti kiek simbolių atitinka vienas hex kitą. Tarkime pirmas hex simbolis kito hex pirmą simbolį ir tuomet gauname kiek jų buvo daugiausia, mažiausia ir vidutiniškai. Tas pats daroma ir su Bitais.
 
