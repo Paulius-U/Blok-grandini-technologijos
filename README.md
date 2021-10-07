@@ -49,13 +49,16 @@ Taip pat tarp pasirinkimų galima ir nusiskaityti failą po eilutę tik žinomas
 
 
 Jeigu jau nusiskaitėte bent vieną failą po eilute galite tuomet lyginti ar nesusidarė tokie pat hashšai tarp eilučių ir taip įsitikinsite kodo stiprumu 
-Mano kodo dabartinė versija nesugeba padaryti tiek hash kad jie nesikartotų, o pati skaičiuoklė veikia tokiu principu jog jeigu antroje eilutėje buvo rastas toks pat hash kaip ir ketvirtoje ir devintoje tada skaičiuojant jų kiekį bus 3 kadangi antra eilutė randa ketvirtą ir devintą ir tada ketvirtoji eilutė randa dar devintą.
+Pati skaičiuoklė veikia tokiu principu jog jeigu antroje eilutėje buvo rastas toks pat hash kaip ir ketvirtoje ir devintoje tada skaičiuojant jų kiekį bus 3 kadangi antra eilutė randa ketvirtą ir devintą ir tada ketvirtoji eilutė randa dar devintą.
+Jei viskas gerai ir hash nepasikarotjo gauname: 
 
-![image](https://user-images.githubusercontent.com/75576100/135526893-3430aa7f-dd34-4e8f-ac8c-41bf19850e05.png)
+![image](https://user-images.githubusercontent.com/75576100/136422111-63cc9e45-d02f-4333-b0e2-566cfb50fdf6.png)
+
+Jei pasikartojo išvardinama kur pasikartojo ir kiek iš viso tai buvo kartų: 
 
 Taip pat kai jau suhashuojate kokį nors dokumentą po eilutę galite pasitiktinti kiek simbolių atitinka vienas hex kitą. Tarkime pirmas hex simbolis kito hex pirmą simbolį ir tuomet gauname kiek jų buvo daugiausia, mažiausia ir vidutiniškai. Tas pats daroma ir su Bitais.
 
-![image](https://user-images.githubusercontent.com/75576100/135524342-9375da47-8ba8-4fa9-a48c-bdb86caaa0a1.png)
+![image](https://user-images.githubusercontent.com/75576100/136421487-1d59abf4-7aab-4db6-a35c-960bac5fac4b.png)
 
 # išvados 
 
