@@ -21,26 +21,26 @@ veliau iveskite nuskaityti failo varda
 
 Pasirinkus faila a.txt kuriame yra tik vienas simbolis gauname rezultata 
 
-![image](https://user-images.githubusercontent.com/75576100/135521162-dc6e7703-4765-43cb-bc1a-6447e36aee6f.png)
+![image](https://user-images.githubusercontent.com/75576100/136428375-bf712a84-b512-4816-96e7-51c73295e1c3.png)
 
 Taciau pasirinke b.txt gauname visiškai kitoki atsakyma
 
-![image](https://user-images.githubusercontent.com/75576100/135521288-80fffb5b-d7fe-4d1f-a8ed-69755643580f.png)
+![image](https://user-images.githubusercontent.com/75576100/136428413-58226692-262b-44da-9797-7fb0eca0f7fb.png)
 
 Toliau mes galime patikrinti ar panašus efektas bus kai paimsime du failus kurie yra visiskai vienodi taciau viename yra įrašytas vienas atsitiktinai pasirinktas simbolis
 
-![image](https://user-images.githubusercontent.com/75576100/135521571-c7a348aa-bddf-403e-b6ab-43ec8597ab31.png)
+![image](https://user-images.githubusercontent.com/75576100/136428683-649a470b-236f-43c7-82c4-b31acb751ecd.png)
 
-![image](https://user-images.githubusercontent.com/75576100/135521645-aa14ca18-b53e-419c-849a-711afaddfedf.png)
+![image](https://user-images.githubusercontent.com/75576100/136428708-bf249b5f-9aee-4666-8f59-80999f02e92e.png)
 
 Žinome mes galime patikrinti ar hash bus pana6us kai du failus kurie visiškai skiresi viena nuo kito suhašuosime
 Dokumentas apie Lord of the Rings informaciją iš wiki 
 
-![image](https://user-images.githubusercontent.com/75576100/135522017-c79c4e72-689e-434b-b0f4-6cac819d0674.png)
+![image](https://user-images.githubusercontent.com/75576100/136428789-bf3a5fe3-ccb3-4d27-8568-230d50f0b719.png)
 
 Kitas dokumentas turintis informaciją apie juokelius
 
-![image](https://user-images.githubusercontent.com/75576100/135522175-4d330675-2eff-450e-acf0-ee50ed228425.png)
+![image](https://user-images.githubusercontent.com/75576100/136428847-60d6002d-f13b-4326-9c0b-e000dba26b62.png)
 
 Tarp pasirinkimu taip pat galima susikurti 100 000 eilučiu atsitiktinai sugeneruotų simbolių dokumentą
 Šitas dokumentas yra sudarytas iš 25 000 eilučių kuriose yra 10 simbolių, 25 000 eilučių sudarytų iš 100 simbolių, 25 000 euilučių sudarytų iš 500 simbolių ir 25 000 eilučių sudarytų iš 1000 simbolių.
@@ -67,4 +67,4 @@ Taip pat kai jau suhashuojate kokį nors dokumentą po eilutę galite pasitiktin
 
 1. Programa su failais ir jų pasikeitimu susitvarko tvarkingai jokios koalizijos nėra kol tikrinami pilni failai nors ir jie skirtūsi tik vienu simboliu 
 2. Toks pat dokumentas visada turės tą patį hash.
-3. Nors su failais visaks tvarkoje tačiau skaitant failus po eilutę buvo sulaukta koalizijos. Todėl galima suprasti kad programa neveikia 100Į taip kaip turėtų veikti
+3. Viskas taip pat veikia kaip ir failo skaitymas po eilutę tik su daugiau žinksnių.
