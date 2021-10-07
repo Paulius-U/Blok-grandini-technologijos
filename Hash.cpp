@@ -7,146 +7,91 @@
 #include <bitset>
 #include <chrono>
 #include <random>
+#include <cstring>
 
 using namespace std;
 
-void Hash();
+int rand1[] = {129, 163, 44, 158, 178, 8, 161, 140, 59, 184, 240, 124, 245, 231, 167, 57, 115, 40, 222, 243, 209, 182, 128, 175, 82, 219, 215, 3, 206, 207, 230, 172, 114, 220, 185, 145, 22, 200, 227, 95, 1, 39, 188, 62, 56, 192, 6, 119, 69, 68, 236, 100, 205, 18, 5, 121, 116, 170, 41, 27, 241, 187, 67, 190, 255, 229, 99, 94, 148, 130, 111, 28, 251, 98, 147, 120, 55, 210, 127, 152, 226, 193, 165, 156, 43, 72, 80, 89, 83, 244, 4, 71, 7, 81, 169, 186, 141, 223, 97, 2, 201, 24, 155, 21, 191, 138, 248, 162, 131, 225, 45, 77, 204, 104, 19, 86, 224, 93, 211, 253, 61, 29, 10, 137, 91, 160, 70, 144, 37, 176, 103, 50, 157, 75, 213, 63, 16, 221, 208, 181, 32, 183, 149, 9, 112, 198, 23, 146, 134, 159, 249, 189, 42, 202, 135, 150, 96, 14, 105, 247, 139, 31, 212, 53, 132, 54, 154, 199, 17, 232, 0, 33, 109, 214, 133, 237, 25, 84, 88, 177, 79, 254, 125, 102, 92, 51, 64, 151, 49, 252, 228, 47, 15, 87, 174, 110, 76, 233, 13, 113, 216, 217, 46, 143, 122, 196, 108, 218, 101, 203, 194, 30, 126, 73, 11, 195, 52, 48, 90, 142, 171, 166, 180, 234, 60, 118, 12, 168, 74, 65, 66, 246, 20, 153, 38, 26, 136, 164, 85, 242, 173, 238, 197, 106, 35, 117, 250, 239, 107, 58, 78, 36, 179, 123, 34, 235};
+int rand2[] = {184, 182, 100, 43, 212, 118, 84, 106, 107, 137, 130, 143, 144, 13, 181, 82, 113, 194, 198, 165, 28, 48, 91, 159, 67, 101, 63, 94, 190, 81, 231, 52, 10, 120, 131, 89, 221, 15, 253, 112, 121, 168, 85, 134, 98, 12, 228, 254, 241, 105, 5, 136, 108, 148, 183, 40, 191, 217, 246, 42, 201, 163, 76, 70, 92, 34, 64, 176, 60, 255, 111, 49, 116, 55, 50, 180, 205, 72, 233, 39, 122, 216, 31, 151, 45, 149, 22, 172, 135, 234, 117, 95, 152, 197, 59, 24, 86, 33, 248, 247, 235, 177, 96, 185, 87, 192, 0, 20, 30, 175, 103, 110, 97, 37, 179, 164, 204, 157, 2, 140, 133, 174, 51, 99, 200, 218, 109, 211, 243, 150, 88, 26, 14, 77, 220, 240, 7, 9, 169, 142, 162, 245, 223, 66, 167, 202, 32, 19, 236, 35, 102, 155, 154, 251, 222, 78, 83, 69, 58, 170, 123, 171, 114, 147, 250, 47, 53, 219, 16, 73, 242, 44, 161, 229, 11, 237, 17, 153, 252, 158, 187, 146, 8, 79, 56, 27, 90, 38, 129, 119, 249, 224, 1, 214, 124, 215, 3, 68, 239, 196, 213, 126, 145, 41, 125, 138, 80, 209, 62, 128, 61, 29, 238, 46, 36, 104, 203, 71, 230, 210, 195, 65, 6, 115, 57, 74, 54, 173, 178, 225, 226, 156, 23, 132, 232, 127, 21, 188, 227, 25, 189, 193, 160, 206, 186, 139, 4, 93, 207, 199, 208, 75, 18, 141, 244, 166};
+
+void Nuskaitymas(int random);
 string GetFile();
-bool Pirminis(int x);
-void Failo_Skaitymas(string FileName, string& Eilute);
-void Failo_Skaitymas_Eilutem();
+void Failo_Skaitymas(string FileName, string Eilute[], int& kiek);
 void Failo_Generaviams();
 string  gen_random(int len);
 void Lyginimas();
 void Bits();
 void Hexas();
-void Failo_Tikrinimas();
+bitset<256> Hash(string inp);
+string ATS(string temp);
 
 int main()
 { 
     int random;
-    cout << "Ar norite tikrinti faila po eilute? (1) " << endl; 
-    cout << "Ar norite sukurti 100 000 eiluciu faila? (2) " << endl;
-    cout << "Ar visa faila pakeisti i hash? (3)" << endl;
-    cout << "Lyginimas hash (4) " << endl;
-    cout << "Bitu / Hex lygmenys: (5) " << endl;
-    cout << "Ar išlieka tas pats hash (6)" << endl;
+    std::cout << "Ar norite tikrinti faila po eilute? (1) " << endl; 
+    std::cout << "Ar norite sukurti 100 000 eiluciu faila? (2) " << endl;
+    std::cout << "Ar visa faila pakeisti i hash? (3)" << endl;
+    std::cout << "Lyginimas hash (4) " << endl;
+    std::cout << "Bitu / Hex lygmenys: (5) " << endl;
     cin >> random;
     if(random == 1)
-        Failo_Skaitymas_Eilutem();
+        Nuskaitymas(2);
     if(random == 2)
         Failo_Generaviams();
     if(random == 3)
-        Hash();
+        Nuskaitymas(1);
     if(random == 4)
         Lyginimas();
     if(random == 5)
     {
-        cout << "Sutapimas: " << endl;
-        cout << "---------------------------------" << endl;
+        std::cout << "Sutapimas: " << endl;
+        std::cout << "---------------------------------" << endl;
         Bits();
         Hexas();
     } 
-    if(random == 6)
-        Failo_Tikrinimas();
     return 0;
 }
 
-void Hash()
+void Nuskaitymas(int random)
 {
     string FileName = GetFile();
-    string inp;
-
+    ofstream R("rez.txt");
+    ofstream RR("bits.txt");
+    double laikas = 0;
+    int n, k = 0;
+    string Tekstas = "", temp, laikinas;
+    string * inp = new string[100000];
     bitset<256> out = 0;
-    int kiek = 0;
-    int pirm[10000];    
-    for (int i = 0; i <= 100000; i++)
+    Failo_Skaitymas(FileName, inp, n);
+    if (random == 1)
     {
-        if(Pirminis(i))
+        for (int i = 0; i < n; i++)
         {
-            pirm[kiek] = i;
-            kiek++;
+            Tekstas += inp[i];
         }
+        out = Hash(Tekstas);
+        temp = out.to_string();
+        Tekstas = ATS(temp);
+        cout << Tekstas;
+
     }
-    Failo_Skaitymas(FileName, inp);
-    for(int in = 0; in < inp.length() % 1000000; in++)
+    if (random == 2)
     {
-        for(int i = 0; i < 256; i++)
+        for (int i = 0; i < n; i++)
         {
-            bitset <256> t = inp[in];
-            t ^= pirm [(i * in) % kiek];
-            t <<= i;
-            out ^= t;
-            if (in > 16)
-            {
-                out[(in + 1) % 256] = out[i];
-                out.flip(8);
-            }
-            else if(in > 8)
-                {               
-                    out[in - 4] = out[i];
-                    out.flip(4);
-                }  
-                else if (in > 4)
-                    {
-                        out[in + 16] = out[i];
-                        t <<= 5;
-                    }
-                    else
-                    {
-                        out[in + 5] = out[i];
-                        out.flip(9);
-                        t <<= 3;
-                    }
-            if (i % 3 == 0)
-            {
-                out[(in + 24) % 256] = out[i];
-                out.flip(2);
-                t <<= 4;
-            }
-            else if (i % 5 == 0)
-                {
-                    out[in % 256] = out[i];
-                    t >>= 3;
-                }
-                else
-                {
-                    out.flip(7);
-                    out[in % 256] = out[i * 18];
-                    t <<= 6;
-                }
-            if (i == 2)
-            {
-                out[(in + 14) % 256] = out[i + 6];
-                out.flip(5);
-                t >>= 1;
-            }
-            if (i + in > 16)
-            {
-                out[(in + 4) % 256] = out[i * 9];
-                t <<= 3;
-                out[(in * 10) % 256] = out[i + 4];
-                t >>= 2;
-                out[(in + 5) % 256] = out[i + 12];
-                t <<= 7;
-            }
-        }                  
-    }
-    string temp = out.to_string();
-    for(int i = 0; i < 64; i++)
-    {
-        bitset <4> bss1( temp.substr (i * 4, (i + 1) * 4) );
-        string out = "";
-        if(bss1.to_ulong() <= 9)
-        {
-            out += bss1.to_ulong() + '0';
+            Tekstas = inp[i];
+            out = Hash(Tekstas);
+            temp = out.to_string();
+            RR << temp << endl;
+            auto Start = std::chrono::high_resolution_clock::now();
+            laikinas = ATS(temp);
+            auto End = std::chrono::high_resolution_clock::now();
+            laikas += std::chrono::duration_cast<std::chrono::milliseconds>(End - Start).count() / 1000.;
+            R << laikinas << endl;
         }
-        else
-        {
-            out += bss1.to_ulong() + 'a' - 10;
-        }
-        cout << out;
+        cout << "Is viso uztruko " << laikas << " s " << endl;
     }
+    delete inp;
 }
 
 string GetFile() 
@@ -175,543 +120,17 @@ string GetFile()
     return FileName;
 }
 
-bool Pirminis(int x) 
-{
-    if (x % 2 == 0) {
-        return false;
-    }
-    
-    for (int i = 3; i <= sqrt(x); i += 2)
-    {
-        if (x % i == 0) 
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-void Failo_Skaitymas(string FileName, string& Eilute)
+void Failo_Skaitymas(string FileName, string Eilute[], int& kiek)
 {
     ifstream D (FileName);
-    string Tekstas, starter = "asgiuhbgsiuhaiushfijgb9iugaf", Laikinas = " ";
-    Eilute = starter;
-    char a;
-    while (getline(D, Tekstas))
+    kiek = 0;
+    string x;
+    while (getline(D, x))
     {
-        for (int i = 0; i < Tekstas.length(); i++)
-        {
-            a = Tekstas[i];
-            if(a == 'e')
-                Laikinas += starter; 
-            if(a == 'r')
-                Laikinas += starter + starter; 
-            if(a == 't')
-                Laikinas += "ashijg"; 
-            if(a == 'y')
-                Laikinas += "asjhnk";
-            if(a == 'u')
-                Laikinas += "iudehfihjbn";
-            if(a == 'i')
-                Laikinas += "3wuiahsib5";
-            if(a == 'o')
-                Laikinas += "aas";
-            if(a == 'p')
-                Laikinas += "asookhbv";
-            if(a == 'a')
-                Laikinas += "asjsf"; 
-            if(a == 's')
-                Laikinas += "asdfashs9"; 
-            if(a == 'd')
-                Laikinas += "asfnoknbbs"; 
-            if(a == 'f')
-                Laikinas += "bolkbj"; 
-            if(a == 'g')
-                Laikinas += "09"; 
-            if(a == 'h')
-                Laikinas += "asfouipf"; 
-            if(a == 'j')
-                Laikinas += "basoidhassa"; 
-            if(a == 'k')
-                Laikinas += "bojbn"; 
-            if(a == 'l')
-                Laikinas += "asgnasd"; 
-            if(a == 'z')
-                Laikinas += "asga0jf";
-            if(a == 'c')
-                Laikinas += "gnvbfij"; 
-            if(a == 'v')
-                Laikinas += "asv"; 
-            if(a == 'b')
-                Laikinas += "amsofokas"; 
-            if(a == 'n')
-                Laikinas += "asvbo"; 
-            if(a == 'm')
-                Laikinas += "aihbajioy8u";
-            if(a == '1')  
-                Laikinas += "aoishij44535bi9uwa";
-            if(a == '2')
-                Laikinas += "suo";
-            if(a == '3') 
-                Laikinas += "bknsijghiu9as";
-            if(a == '4')  
-                Laikinas += "bjisajnoin32hnauioh"; 
-            if(a == '5')  
-                Laikinas += "3ri98guj97jgijbnu8ia";
-            if(a == '6')  
-                Laikinas += "5yi9ih9834g3g0ns8iugf";
-            if(a == '7')  
-                Laikinas += "b9t83uyuthijnvb";
-            if(a == '8')  
-                Laikinas += "pogbikgdjoiiuh09-wog";
-            if(a == '9')  
-                Laikinas += "35j9jg74gijsb89ugf"; 
-            if(a == '0')  
-                Laikinas += "4980uybniushgf8";
-            if(a == ' ')  
-                Laikinas += "45u9uh8g9fuh8t7gh23978h";
-            if(a == 'E')
-                Laikinas =+ "aoigjn9gn";
-            if(a == 'R')
-                Laikinas =+ "boiahs346y09s";
-            if(a == 'T')
-                Laikinas =+ "asgm9ihgj928uaj";
-            if(a == 'Y')
-                Laikinas =+ "asg0oijg923sg9i";
-            if(a == 'U')
-                Laikinas =+ "ag09idujg98";
-            if(a == 'I')
-                Laikinas =+ "bo9iajgu8jasgas";
-            if(a == 'O')
-                Laikinas =+ "hb909uashgiuasg";
-            if(a == 'P')
-                Laikinas =+ "gba9uiasng";
-            if(a == 'A')
-                Laikinas =+ "agoijguahjs";
-            if(a == 'S')
-                Laikinas =+ "489unio";
-            if(a == 'D')
-                Laikinas =+ "hnolk";
-            if(a == 'F')
-                Laikinas =+ "asgmh3gfhdgas";
-            if(a == 'G')
-                Laikinas =+ "t0i8guhti ";
-            if(a == 'H')
-                Laikinas =+ "h0uewg";
-            if(a == 'J')
-                Laikinas =+ "4e8098g9hgijseng";
-            if(a == 'K')
-                Laikinas =+ "yjh5hy87324g7";
-            if(a == 'L')
-                Laikinas =+ "y07q";
-            if(a == 'Z')
-                Laikinas =+ "yh8fu";
-            if(a == 'C')
-                Laikinas =+ "yhntmwo";
-            if(a == 'V')
-                Laikinas =+ "gf9uiiug7yu";
-            if(a == 'B')
-                Laikinas =+ "g84hty8";
-            if(a == 'N')
-                Laikinas =+ "t0ht";
-            if(a == 'M')
-                Laikinas =+ "hwuyfg";
-            if(a == 'X')
-                Laikinas =+ "t9023wqy9";
-            if(a == ')')
-                Laikinas =+ "623478yg8734";
-            if(a == '-')
-                Laikinas += "9887hg324";
-        }
-        Eilute += Laikinas;
-        Eilute += Tekstas;
-    }
-    Eilute += '\0';
-}
-
-void Failo_Skaitymas_Eilutem()
-{
-    double laikas = 0;
-    int n = 0;
-    string FileName = GetFile();
-    ifstream D (FileName);
-    ofstream R ("rez.txt");
-    ofstream RR ("bits.txt");
-    string Tekstas, starter = "asgiuhbgsiuhaiushfijgb9iugaf", Laikinas, s = " ";
-    string Eilute = starter;
-    bitset<256> out = 0;
-    char a;
-    while (getline(D, Tekstas))
-    {
-        for (int i = 0; i < Tekstas.length(); i++)
-        {
-            a = Tekstas[i];
-            if(a == 'e')
-                Laikinas += starter; 
-            if(a == 'r')
-                Laikinas += starter + starter; 
-            if(a == 't')
-                Laikinas += "ashijg"; 
-            if(a == 'y')
-                Laikinas += "asjhnk";
-            if(a == 'u')
-                Laikinas += "iudehfihjbn";
-            if(a == 'i')
-                Laikinas += "3wuiahsib5";
-            if(a == 'o')
-                Laikinas += "aas";
-            if(a == 'p')
-                Laikinas += "asookhbv";
-            if(a == 'a')
-                Laikinas += "asjsf"; 
-            if(a == 's')
-                Laikinas += "asdfashs9"; 
-            if(a == 'd')
-                Laikinas += "asfnoknbbs"; 
-            if(a == 'f')
-                Laikinas += "bolkbj"; 
-            if(a == 'g')
-                Laikinas += "09"; 
-            if(a == 'h')
-                Laikinas += "asfouipf"; 
-            if(a == 'j')
-                Laikinas += "basoidhassa"; 
-            if(a == 'k')
-                Laikinas += "bojbn"; 
-            if(a == 'l')
-                Laikinas += "asgnasd"; 
-            if(a == 'z')
-                Laikinas += "asga0jf";
-            if(a == 'c')
-                Laikinas += "gnvbfij"; 
-            if(a == 'v')
-                Laikinas += "asv"; 
-            if(a == 'b')
-                Laikinas += "amsofokas"; 
-            if(a == 'n')
-                Laikinas += "asvbo"; 
-            if(a == 'm')
-                Laikinas += "aihbajioy8u";
-            if(a == '1')  
-                Laikinas += "aoishij44535bi9uwa";
-            if(a == '2')
-                Laikinas += "suo";
-            if(a == '3') 
-                Laikinas += "bknsijghiu9as";
-            if(a == '4')  
-                Laikinas += "bjisajnoin32hnauioh"; 
-            if(a == '5')  
-                Laikinas += "3ri98guj97jgijbnu8ia";
-            if(a == '6')  
-                Laikinas += "5yi9ih9834g3g0ns8iugf";
-            if(a == '7')  
-                Laikinas += "b9t83uyuthijnvb";
-            if(a == '8')  
-                Laikinas += "pogbikgdjoiiuh09-wog";
-            if(a == '9')  
-                Laikinas += "35j9jg74gijsb89ugf"; 
-            if(a == '0')  
-                Laikinas += "4980uybniushgf8";
-            if(a == ' ')  
-                Laikinas += "45u9uh8g9fuh8t7gh23978h";
-            if(a == 'E')
-                Laikinas =+ "aoigjn9gn";
-            if(a == 'R')
-                Laikinas =+ "boiahs346y09s";
-            if(a == 'T')
-                Laikinas =+ "asgm9ihgj928uaj";
-            if(a == 'Y')
-                Laikinas =+ "asg0oijg923sg9i";
-            if(a == 'U')
-                Laikinas =+ "ag09idujg98";
-            if(a == 'I')
-                Laikinas =+ "bo9iajgu8jasgas";
-            if(a == 'O')
-                Laikinas =+ "hb909uashgiuasg";
-            if(a == 'P')
-                Laikinas =+ "gba9uiasng";
-            if(a == 'A')
-                Laikinas =+ "agoijguahjs";
-            if(a == 'S')
-                Laikinas =+ "489unio";
-            if(a == 'D')
-                Laikinas =+ "hnolk";
-            if(a == 'F')
-                Laikinas =+ "asgmh3gfhdgas";
-            if(a == 'G')
-                Laikinas =+ "t0i8guhti ";
-            if(a == 'H')
-                Laikinas =+ "h0uewg";
-            if(a == 'J')
-                Laikinas =+ "4e8098g9hgijseng";
-            if(a == 'K')
-                Laikinas =+ "yjh5hy87324g7";
-            if(a == 'L')
-                Laikinas =+ "y07q";
-            if(a == 'Z')
-                Laikinas =+ "yh8fu";
-            if(a == 'C')
-                Laikinas =+ "yhntmwo";
-            if(a == 'V')
-                Laikinas =+ "gf9uiiug7yu";
-            if(a == 'B')
-                Laikinas =+ "g84hty8";
-            if(a == 'N')
-                Laikinas =+ "t0ht";
-            if(a == 'M')
-                Laikinas =+ "hwuyfg";
-            if(a == 'X')
-                Laikinas =+ "t9023wqy9";
-            if(a == ')')
-                Laikinas =+ "623478yg8734";
-            if(a == '-')
-                Laikinas += "9887hg324";
-        }
-        Eilute += Tekstas;
-        Eilute += Laikinas;
-        int kiek = 0;
-        int pirm[10000];    
-        for (int i = 0; i <= 100000; i++)
-        {
-            if(Pirminis(i))
-            {
-                pirm[kiek] = i;
-                kiek++;
-            }
-        }
-        string inp = Eilute;
-        for(int in = 0; in < inp.length() % 100000; in++)
-        {
-            for(int i = 0; i < 256; i++)
-            {
-                bitset <256> t = inp[in];
-                t ^= pirm [(i * in) % kiek];
-                t <<= i;
-                out ^= t;
-                if(in > 128)
-                {
-                    t ^= pirm [(i * in * 4) % kiek];
-                    out ^= t;
-                    if(i > 48)
-                    {
-                        ~out;
-                    }
-                }
-                if(in > 48)
-                {
-                    if(i > 32)
-                        t <<= 3;
-                    else if(i > 48)
-                            t ^= pirm [(i * in * 6) % kiek];
-                         else if(i > 70 || 100)
-                                out |= t;
-                              else if(i > 150)
-                                    out[(in + 14) % 256] = out[i];
-                    out ^= t;
-                }
-                else if (in > 16)
-                {
-                    out[(in + 1) % 256] = out[i];
-                    out.flip(8);
-                    out |= t;
-                }
-                else if(in > 8)
-                    {               
-                        out[in - 4] = out[i];
-                        out.flip(4);
-                        if(i > 32)
-                            out |= t;
-                        else if(i > 48)
-                                t <<= 16;
-                             else if(i > 64)
-                                     t ^= pirm [(i * in * 42) % kiek];
-                                  else if(i > 128)
-                                        t ^= pirm [(i * in * 123) % kiek];                                                       
-                        out ^= t;
-                        if(i > 200)
-                        {
-                            ~out;
-                        }
-                    }   
-                    else if (in > 4)
-                        {
-                            out[in + 64] = out[i];
-                            out[in + 56] = out[i];
-                            out[in + 23] = out[i];
-                            out[in + 16] = out[i];
-                            out[in + 87] = out[i];
-                            t <<= 5;
-                            t ^= pirm [(i * in * 12) % kiek];
-                            out ^= t;
-                            if(i > 100) 
-                            {
-                                out |= t;
-                                ~out;
-                                if(i > 128)
-                                {
-                                    t ^= pirm [(i * in * 9) % kiek];
-                                    t <<= 7;
-                                }
-                                else if(i > 200)
-                                        out <<= 5;
-                            }
-                            else
-                            {
-                                if(i > 128)
-                                    t ^= pirm [(i * in * 18) % kiek];
-                                else if(i > 64)
-                                        out ^= t;
-                                if(i < 32)
-                                    ~out;
-                                out ^= t;
-                            }                       
-                        }
-                        else
-                        {
-                            out[in + 5] = out[i];
-                            out.flip(9);
-                            t <<= 3;
-                            ~out;
-                            out ^= t;
-                            out.flip(i);
-                        }
-                if(i == 32)
-                {
-                    out[in % 256] = 0;
-                    out <<= 3;
-                    out ^= t;
-                }
-                if(i == 84)
-                    out[in % 256] = 1;
-                if(i == 120)
-                    ~out;
-                if(i == 178)
-                    out[in % 256] = 0;
-                if(i == 150)
-                    out ^= t;
-                if(i == 40)
-                    out <<= 12;
-                if (i % 7 == 0)
-                {
-                    out.flip(in % 256);
-                    out >>= 3;
-                }
-                if(i % 10 == 0)
-                {
-                    out.flip((in * i) % 256);
-                    t ^= pirm [(i * in) % kiek];
-                    out |= t;
-                }
-                if(i )
-                if(i % 2 == 0)
-                {
-                    out ^= t;
-                    out <<= 1;
-                }
-                if(i % 80 == 0)
-                {
-                    out.flip(in % 256);
-                    out <<= 14;
-                }
-                if(i % 16 == 0)
-                {
-                    t ^= pirm [(i * in * 2) % kiek];
-                    out ^= t;
-                    out <<= 3;
-                    out[(in * 36) % 256] = out[i];
-                    out[(in * 14) % 256] = out[i];
-                    out[(in * 42) % 256] = out[i];
-                    out |= t;
-                }
-                if(i % 64 == 0)
-                {
-                    t ^= pirm [(i * in * 26) % kiek];
-                    out ^= t;
-                    out[(in * 12) % 256] = out[i];
-                    out[(in * 76) % 256] = out[i];
-                    out[(in * 84) % 256] = out[i];
-                }
-                if (i % 3 == 0)
-                {
-                    out[(in + 24) % 256] = out[i];
-                    out.flip(2);
-                    t <<= 4;
-                    out ^= t;
-                }
-                else if (i % 5 == 0)
-                    {
-                        out[in % 256] = out[i];
-                        t >>= 3;
-                        out |= t;
-                    }
-                    else
-                    {
-                        out.flip(7);
-                        out[in % 256] = out[i * 18];
-                        t <<= 6;
-                    }
-                if (i % 16 == 2)
-                {
-                    out[(in + 14) % 256] = out[i + 6];
-                    out.flip(5);
-                    t >>= 1;
-                    out ^= t;
-                }
-                if (i + in > 16)
-                {
-                    if(i > 0 || i < 10)
-                    {
-                        t ^= pirm [(i * in * 8) % kiek];
-                        out ^= t;                        
-                    }
-                    if(i < 10)
-                    {
-                        out[(in + 4) % 256] = out[i * 9];
-                        t <<= 3;                        
-                    }
-                    else ~t;
-                    out[(in * 10) % 256] = out[i + 4];
-                    t >>= 2;
-                    out[(in + 5) % 256] = out[i + 12];
-                    t <<= 7;
-                    out ^= t;
-                }
-            }
-        }                  
-        auto Start = std::chrono::high_resolution_clock::now();
-        string temp = out.to_string();
-        RR << temp << endl;
-        for(int i = 0; i < 64; i++)
-        {
-            bitset <4> bss1( temp.substr (i * 4, (i + 1) * 4) );
-            string out = "";
-            if(bss1.to_ulong() <= 9)
-            {
-                out += bss1.to_ulong() + '0';
-            }
-            else
-            {
-                out += bss1.to_ulong() + 'a' - 10;
-            }
-            // cout << out;
-            R << out;
-        }
-        auto End = std::chrono::high_resolution_clock::now();
-        laikas += std::chrono::duration_cast<std::chrono::milliseconds>(End - Start).count() / 1000.;
-        s = Tekstas;
-        if(s.length() > 10000)
-            s = Tekstas;
-        R << endl;
-        Eilute = " ";
-        Tekstas = " ";
-        Laikinas = " ";
-        inp = " ";
-        temp = " ";
-        out = 0;
-        Eilute += s + s + s + s + s + s;
-        n++;
-    }
-    cout << "is viso uztruko: " << laikas << endl;
+        Eilute[kiek] = x;
+        kiek++;
+        // if ( kiek == 10000) break; 
+    }        
 }
 
 void Failo_Generaviams()
@@ -756,42 +175,36 @@ string  gen_random(int len)
 
 void Lyginimas()
 {
-    ifstream D ("rez.txt");
     ofstream R ("random.txt");
     int kiek = 0, in = 0;
-    string a, laikinas[50000];
-    while(getline(D, a))
-    {      
-        laikinas[in] = a;
-        in++;
-    }
+    string a;
+    string * laikinas1 = new string[100000];
+    Failo_Skaitymas("rez.txt", laikinas1, in);
     for(int i = 0; i < in - 1; i++)
         for(int j = i + 1; j < in; j++)
         {
-            if(laikinas[i] == laikinas[j])
+            if(laikinas1[i] == laikinas1[j])
             {
+                std::cout << i + 1 << " " << j + 1 << endl;
                 kiek++;
             }   
         }
     if(kiek > 0)
-        cout << "Vienodu hash buvo " << kiek << " kartai / kartu" << endl;
-    else cout << "Visi Hash skirtingi ";
+        std::cout << "Vienodu hash buvo " << kiek << " kartai / kartu" << endl;
+    else std::cout << "Visi Hash skirtingi ";
+    delete[] laikinas1;
 }
 
 void Bits()
 {
-    ifstream D ("bits.txt");
     double Bats;
-    int Bviso = 0;
+    double Bviso = 0;
     int Bmin = 1000;
     int Bmax = 0;
     int in = 0;
-    string bits[50000], a;
-    while (getline(D, a))
-    {
-        bits[in] = a;
-        in++;
-    }
+    string * bits = new string[100000];
+    string a;
+    Failo_Skaitymas("bits.txt", bits, in);
     for(int i = 0; i < in; i++)
         for(int j = i + 1; j < in - 1; j++)
         {
@@ -803,430 +216,102 @@ void Bits()
                 if (str[k] == str2[k])
                 {
                     kiek++;
-                    Bviso++;
                 }
             }
-                if(kiek < Bmin) Bmin = kiek;
-                if(kiek > Bmax) Bmax = kiek;
+            Bviso += (double) kiek / 256;
+            if(kiek < Bmin) Bmin = kiek;
+            if(kiek > Bmax) Bmax = kiek;
         }
-
-    Bats = (double) Bviso / (256 * in * (in - 1)) * 100;
-    cout << "Bits min: " << Bmin << "   Bits max:   " << Bmax << "  Vidurkis " << Bats << " %" << endl;
+    Bats = Bviso / (in * (in - 1)) * 100;
+    std::cout << "Bits min: " << Bmin << "   Bits max:   " << Bmax << "  Vidurkis " << Bats << " %" << endl;
+    delete[] bits;
 }
 
 void Hexas()
 {
-    ifstream DD ("rez.txt");
     double Hats;
-    int Hviso = 0;
+    double Hviso = 0;
     int Hmin = 1000;
     int Hmax = 0;
     int n = 0;
-    string hex[50000], b;
-
-    while (getline(DD, b))
-    {
-        hex[n] = b;
-        n++;
-    }
+    char ssr[64], ssr2[64];
+    string * hex = new string[100000]; 
+    string b;
+    Failo_Skaitymas("rez.txt", hex, n);
     for(int i = 0; i < n; i++)
         for(int j = i + 1; j < n - 1; j++)
         {
             int kiek = 0;
-            const char *ssr = hex[i].c_str();
-            const char *ssr2 = hex[j].c_str();
+            strcpy(ssr, hex[i].c_str());
+            strcpy(ssr2, hex[j].c_str());
             for(int k = 0; k < 64; k++)
             {
                 if(ssr[k] == ssr2[k])
                 {
                     kiek++;
-                    Hviso++;
                 }
             }
             if(kiek < Hmin) Hmin = kiek;
             if(kiek > Hmax) Hmax = kiek;
+            Hviso += (double) kiek / 64;
         }
-    Hats = (double) Hviso / (64 * n * (n - 1)) * 100;
-    cout << "Hex  min: " << Hmin << "    Hex  max:   " << Hmax << "    Vidurkis " << Hats << " %" << endl;
+    Hats = Hviso / (n * (n - 1)) * 100;
+    std::cout << "Hex  min: " << Hmin << "    Hex  max:   " << Hmax << "    Vidurkis " << Hats << " %" << endl;
+    delete[] hex;
 }
 
-void Failo_Tikrinimas()
+bitset<256> Hash(string inp)
 {
-    double laikas = 0;
-    int n = 0;
-    string FileName = GetFile();
-    ifstream D (FileName);
-    ofstream R ("rez.txt");
-    ofstream RR ("bits.txt");
-    string Tekstas, starter = "asgiuhbgsiuhaiushfijgb9iugaf", Laikinas;
-    string Eilute = starter;
-    bitset<256> out = 0;
-    char a;
-    while (getline(D, Tekstas))
+    if (inp == "")inp = "absdthu45th389wi";
+    std::bitset<256> hash;
+    for (int a = 0; a < inp.length(); a++)
     {
-        for (int i = 0; i < Tekstas.length(); i++)
+        for (int i = 0; i < 32; i++)
         {
-            a = Tekstas[i];
-            if(a == 'e')
-                Laikinas += starter; 
-            if(a == 'r')
-                Laikinas += starter + starter; 
-            if(a == 't')
-                Laikinas += "ashijg"; 
-            if(a == 'y')
-                Laikinas += "asjhnk";
-            if(a == 'u')
-                Laikinas += "iudehfihjbn";
-            if(a == 'i')
-                Laikinas += "3wuiahsib5";
-            if(a == 'o')
-                Laikinas += "aas";
-            if(a == 'p')
-                Laikinas += "asookhbv";
-            if(a == 'a')
-                Laikinas += "asjsf"; 
-            if(a == 's')
-                Laikinas += "asdfashs9"; 
-            if(a == 'd')
-                Laikinas += "asfnoknbbs"; 
-            if(a == 'f')
-                Laikinas += "bolkbj"; 
-            if(a == 'g')
-                Laikinas += "09"; 
-            if(a == 'h')
-                Laikinas += "asfouipf"; 
-            if(a == 'j')
-                Laikinas += "basoidhassa"; 
-            if(a == 'k')
-                Laikinas += "bojbn"; 
-            if(a == 'l')
-                Laikinas += "asgnasd"; 
-            if(a == 'z')
-                Laikinas += "asga0jf";
-            if(a == 'c')
-                Laikinas += "gnvbfij"; 
-            if(a == 'v')
-                Laikinas += "asv"; 
-            if(a == 'b')
-                Laikinas += "amsofokas"; 
-            if(a == 'n')
-                Laikinas += "asvbo"; 
-            if(a == 'm')
-                Laikinas += "aihbajioy8u";
-            if(a == '1')  
-                Laikinas += "aoishij44535bi9uwa";
-            if(a == '2')
-                Laikinas += "suo";
-            if(a == '3') 
-                Laikinas += "bknsijghiu9as";
-            if(a == '4')  
-                Laikinas += "bjisajnoin32hnauioh"; 
-            if(a == '5')  
-                Laikinas += "3ri98guj97jgijbnu8ia";
-            if(a == '6')  
-                Laikinas += "5yi9ih9834g3g0ns8iugf";
-            if(a == '7')  
-                Laikinas += "b9t83uyuthijnvb";
-            if(a == '8')  
-                Laikinas += "pogbikgdjoiiuh09-wog";
-            if(a == '9')  
-                Laikinas += "35j9jg74gijsb89ugf"; 
-            if(a == '0')  
-                Laikinas += "4980uybniushgf8";
-            if(a == ' ')  
-                Laikinas += "45u9uh8g9fuh8t7gh23978h";
-            if(a == 'E')
-                Laikinas =+ "aoigjn9gn";
-            if(a == 'R')
-                Laikinas =+ "boiahs346y09s";
-            if(a == 'T')
-                Laikinas =+ "asgm9ihgj928uaj";
-            if(a == 'Y')
-                Laikinas =+ "asg0oijg923sg9i";
-            if(a == 'U')
-                Laikinas =+ "ag09idujg98";
-            if(a == 'I')
-                Laikinas =+ "bo9iajgu8jasgas";
-            if(a == 'O')
-                Laikinas =+ "hb909uashgiuasg";
-            if(a == 'P')
-                Laikinas =+ "gba9uiasng";
-            if(a == 'A')
-                Laikinas =+ "agoijguahjs";
-            if(a == 'S')
-                Laikinas =+ "489unio";
-            if(a == 'D')
-                Laikinas =+ "hnolk";
-            if(a == 'F')
-                Laikinas =+ "asgmh3gfhdgas";
-            if(a == 'G')
-                Laikinas =+ "t0i8guhti ";
-            if(a == 'H')
-                Laikinas =+ "h0uewg";
-            if(a == 'J')
-                Laikinas =+ "4e8098g9hgijseng";
-            if(a == 'K')
-                Laikinas =+ "yjh5hy87324g7";
-            if(a == 'L')
-                Laikinas =+ "y07q";
-            if(a == 'Z')
-                Laikinas =+ "yh8fu";
-            if(a == 'C')
-                Laikinas =+ "yhntmwo";
-            if(a == 'V')
-                Laikinas =+ "gf9uiiug7yu";
-            if(a == 'B')
-                Laikinas =+ "g84hty8";
-            if(a == 'N')
-                Laikinas =+ "t0ht";
-            if(a == 'M')
-                Laikinas =+ "hwuyfg";
-            if(a == 'X')
-                Laikinas =+ "t9023wqy9";
-            if(a == ')')
-                Laikinas =+ "623478yg8734";
-            if(a == '-')
-                Laikinas += "9887hg324";
-        }
-        Eilute += Tekstas;
-        Eilute += Laikinas;
-        int kiek = 0;
-        int pirm[10000];    
-        for (int i = 0; i <= 100000; i++)
-        {
-            if(Pirminis(i))
+            std::bitset<256> temp;
+            int randomiser = rand1[(((int)inp[a] * 5 + i + a) % 256)] % 30;
+            if(randomiser <= 7)
             {
-                pirm[kiek] = i;
-                kiek++;
+                temp = inp[a];
+                temp <<= randomiser;
+                temp <<= (i * 8);
+                hash ^= temp;
+            }
+            else if(randomiser <= 14)
+            {
+                temp = ~inp[a];
+                temp <<= (randomiser - 8);
+                temp <<= (i * 8);          
+                hash ^= temp;
+            }
+            else{
+                temp = rand2[(((int)inp[a] * 17 + i + a) % 256)];
+                temp <<=(i * 8);
+                hash ^= temp;
+                temp = rand1[(((int)inp[a] * 3 + i + a) % 256)] % 30;
+                hash ^= temp;
             }
         }
-        string inp = Eilute;
-        for(int in = 0; in < inp.length() % 100000; in++)
-        {
-            for(int i = 0; i < 256; i++)
-            {
-                bitset <256> t = inp[in];
-                t ^= pirm [(i * in) % kiek];
-                t <<= i;
-                out ^= t;
-                if(in > 128)
-                {
-                    t ^= pirm [(i * in * 4) % kiek];
-                    out ^= t;
-                    if(i > 48)
-                    {
-                        ~out;
-                    }
-                }
-                if(in > 48)
-                {
-                    if(i > 32)
-                        t <<= 3;
-                    else if(i > 48)
-                            t ^= pirm [(i * in * 6) % kiek];
-                         else if(i > 70 || 100)
-                                out |= t;
-                              else if(i > 150)
-                                    out[(in + 14) % 256] = out[i];
-                    out ^= t;
-                }
-                else if (in > 16)
-                {
-                    out[(in + 1) % 256] = out[i];
-                    out.flip(8);
-                    out |= t;
-                }
-                else if(in > 8)
-                    {               
-                        out[in - 4] = out[i];
-                        out.flip(4);
-                        if(i > 32)
-                            out |= t;
-                        else if(i > 48)
-                                t <<= 16;
-                             else if(i > 64)
-                                     t ^= pirm [(i * in * 42) % kiek];
-                                  else if(i > 128)
-                                        t ^= pirm [(i * in * 123) % kiek];                                                       
-                        out ^= t;
-                        if(i > 200)
-                        {
-                            ~out;
-                        }
-                    }   
-                    else if (in > 4)
-                        {
-                            out[in + 64] = out[i];
-                            out[in + 56] = out[i];
-                            out[in + 23] = out[i];
-                            out[in + 16] = out[i];
-                            out[in + 87] = out[i];
-                            t <<= 5;
-                            t ^= pirm [(i * in * 12) % kiek];
-                            out ^= t;
-                            if(i > 100) 
-                            {
-                                out |= t;
-                                ~out;
-                                if(i > 128)
-                                {
-                                    t ^= pirm [(i * in * 9) % kiek];
-                                    t <<= 7;
-                                }
-                                else if(i > 200)
-                                        out <<= 5;
-                            }
-                            else
-                            {
-                                if(i > 128)
-                                    t ^= pirm [(i * in * 18) % kiek];
-                                else if(i > 64)
-                                        out ^= t;
-                                if(i < 32)
-                                    ~out;
-                                out ^= t;
-                            }                       
-                        }
-                        else
-                        {
-                            out[in + 5] = out[i];
-                            out.flip(9);
-                            t <<= 3;
-                            ~out;
-                            out ^= t;
-                            out.flip(i);
-                        }
-                if(i == 32)
-                {
-                    out[in % 256] = 0;
-                    out <<= 3;
-                    out ^= t;
-                }
-                if(i == 84)
-                    out[in % 256] = 1;
-                if(i == 120)
-                    ~out;
-                if(i == 178)
-                    out[in % 256] = 0;
-                if(i == 150)
-                    out ^= t;
-                if(i == 40)
-                    out <<= 12;
-                if (i % 7 == 0)
-                {
-                    out.flip(in % 256);
-                    out >>= 3;
-                }
-                if(i % 10 == 0)
-                {
-                    out.flip((in * i) % 256);
-                    t ^= pirm [(i * in) % kiek];
-                    out |= t;
-                }
-                if(i )
-                if(i % 2 == 0)
-                {
-                    out ^= t;
-                    out <<= 1;
-                }
-                if(i % 80 == 0)
-                {
-                    out.flip(in % 256);
-                    out <<= 14;
-                }
-                if(i % 16 == 0)
-                {
-                    t ^= pirm [(i * in * 2) % kiek];
-                    out ^= t;
-                    out <<= 3;
-                    out[(in * 36) % 256] = out[i];
-                    out[(in * 14) % 256] = out[i];
-                    out[(in * 42) % 256] = out[i];
-                    out |= t;
-                }
-                if(i % 64 == 0)
-                {
-                    t ^= pirm [(i * in * 26) % kiek];
-                    out ^= t;
-                    out[(in * 12) % 256] = out[i];
-                    out[(in * 76) % 256] = out[i];
-                    out[(in * 84) % 256] = out[i];
-                }
-                if (i % 3 == 0)
-                {
-                    out[(in + 24) % 256] = out[i];
-                    out.flip(2);
-                    t <<= 4;
-                    out ^= t;
-                }
-                else if (i % 5 == 0)
-                    {
-                        out[in % 256] = out[i];
-                        t >>= 3;
-                        out |= t;
-                    }
-                    else
-                    {
-                        out.flip(7);
-                        out[in % 256] = out[i * 18];
-                        t <<= 6;
-                    }
-                if (i % 16 == 2)
-                {
-                    out[(in + 14) % 256] = out[i + 6];
-                    out.flip(5);
-                    t >>= 1;
-                    out ^= t;
-                }
-                if (i + in > 16)
-                {
-                    if(i > 0 || i < 10)
-                    {
-                        t ^= pirm [(i * in * 8) % kiek];
-                        out ^= t;                        
-                    }
-                    if(i < 10)
-                    {
-                        out[(in + 4) % 256] = out[i * 9];
-                        t <<= 3;                        
-                    }
-                    else ~t;
-                    out[(in * 10) % 256] = out[i + 4];
-                    t >>= 2;
-                    out[(in + 5) % 256] = out[i + 12];
-                    t <<= 7;
-                    out ^= t;
-                }
-            }
-        }                  
-        auto Start = std::chrono::high_resolution_clock::now();
-        string temp = out.to_string();
-        RR << temp << endl;
-        for(int i = 0; i < 64; i++)
-        {
-            bitset <4> bss1( temp.substr (i * 4, (i + 1) * 4) );
-            string out = "";
-            if(bss1.to_ulong() <= 9)
-            {
-                out += bss1.to_ulong() + '0';
-            }
-            else
-            {
-                out += bss1.to_ulong() + 'a' - 10;
-            }
-            // cout << out;
-            R << out;
-        }
-        auto End = std::chrono::high_resolution_clock::now();
-        laikas += std::chrono::duration_cast<std::chrono::milliseconds>(End - Start).count() / 1000.;
-        R << endl;
-        Eilute = " ";
-        Tekstas = " ";
-        Laikinas = " ";
-        inp = " ";
-        temp = " ";
-        out = 0;
-        n++;
     }
-    cout << "is viso uztruko: " << laikas << endl;
+    return hash;
+}
+
+string ATS(string temp)
+{
+    string a = "";
+    for(int i = 0; i < 64; i++)
+    {
+        bitset <4> bss1( temp.substr (i * 4, (i + 1) * 4) );
+        string out = "";
+        if(bss1.to_ulong() <= 9)
+        {
+            out += bss1.to_ulong() + '0';
+        }
+        else
+        {
+            out += bss1.to_ulong() + 'a' - 10;
+        }
+        a += out;
+    }
+    return a;
 }
